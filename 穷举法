@@ -1,0 +1,45 @@
+#include<iostream>
+#include<string>
+#include<string.h>
+#include<stdio.h>
+using namespace std;
+
+string  findLongestPalindrome(char *str)
+{
+	int len = strlen(str);
+	int maxLength = 0;
+	int start = 0;         //每个单个的字符也可以当成回文子串
+	for(int i = 0; i < len; ++i){
+		for(int j = i; j < len; ++j){
+			int temp1 = i;
+			int temp2 = j;
+			for(; temp1 < temp2; ++temp1, --temp2){
+				if(str[temp1] != str[temp2])
+					break;
+			}
+			if(temp1 >= temp2 && (j-i) > maxLength){
+				maxLength = j-i+1;
+				start = i;
+				//cout<<start<<endl;
+			}
+		}
+	}
+	if(maxLength<=1)
+		return "";
+	else{
+		string s;
+		for(int i = maxLength; i > 0; --i)
+			s += str[start++];
+		//如果函数的输入为string类型的变量str,则s = str.substr(start, maxLength);
+		return s;
+	}
+}
+
+int main()
+{
+	char str[] = "abbacddeddc";
+	string result = findLongestPalindrome(str);
+	cout<<result<<endl;
+
+	return 0;
+}
