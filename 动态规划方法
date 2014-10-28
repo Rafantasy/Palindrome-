@@ -20,12 +20,13 @@ string  findLongestPalindrome(char *str)
 			maxLength = 2;
 		}
 	}
-	for(int i = 3; i <= len; ++i){
-		for(int j = 0; j <= len-i; ++j){
-			int k = j + i - 1;               //子串结束地址
+	//找回文串长度大于2的情况
+	for(int temp_len = 3; temp_len <= len; ++temp_len){
+		for(int j = 0; j <= len-temp_len; ++j){
+			int k = j + temp_len - 1;               //子串结束地址
 			if(c[j+1][k-1] && str[j] == str[k]){
 				c[j][k] = 1;
-				maxLength = i;
+				maxLength = temp_len;
 				start = j;
 			}
 		}
