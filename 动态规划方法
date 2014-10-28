@@ -1,0 +1,50 @@
+#include<iostream>
+#include<string>
+#include<string.h>
+#include<stdio.h>
+using namespace std;
+
+string  findLongestPalindrome(char *str)
+{
+	int len = strlen(str);
+	int maxLength = 1;
+	int start = 0;         //每个单个字符也可以当成回文子串
+	int c[len][len];
+	memset(c, 0, len*len);
+	//初始化状态矩阵(判断连续的两个字符是否相等)
+	for(int i = 0; i < len; ++i){
+		c[i][i] = 1;
+		if(i<len-1 && str[i] == str[i+1]){
+			c[i][i+1] = 1;
+			start = i;
+			maxLength = 2;
+		}
+	}
+	for(int i = 3; i <= len; ++i){
+		for(int j = 0; j <= len-i; ++j){
+			int k = j + i - 1;               //子串结束地址
+			if(c[j+1][k-1] && str[j] == str[k]){
+				c[j][k] = 1;
+				maxLength = i;
+				start = j;
+			}
+		}
+	}
+	if(maxLength >= 2){
+		string s;
+		for(int i = maxLength; i > 0; --i)
+			s += str[start++];
+		return s;
+	}
+	else
+		return "";
+}
+
+int main()
+{
+	char str[] = "abbacddeddc";
+	string result = findLongestPalindrome(str);
+	cout<<result<<endl;
+
+	return 0;
+}
